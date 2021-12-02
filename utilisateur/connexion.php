@@ -11,35 +11,21 @@
 
   <body>
   <div class="login-form">
-    <?php 
-      if(isset($_GET['login_err'])) {
-        $err = htmlspecialchars($_GET['login_err']);
-
-        switch($err) {
-          case 'password':
-          ?>
-            <div class="alert alert-danger">
-              <strong>Erreur</strong> mot de passe incorrect
-            </div>
-          <?php
-          break;
-
-          case 'email':
-          ?>
-            <div class="alert alert-danger">
-              <strong>Erreur</strong> email incorrect
-            </div>
-          <?php
-          break;
-
-          case 'already':
-          ?>
-            <div class="alert alert-danger">
-              <strong>Erreur</strong> compte non existant
-            </div>
-          <?php
-          break;
-        }
+    <?php
+    session_start();
+    //var_dump($_SESSION);
+      if(isset($_SESSION['error'])) { ?>
+        <div class="alert alert-danger">
+            <span style="font-weight:bold"><?= htmlspecialchars($_SESSION['error']); ?></span>
+        </div> <?php
+        unset($_SESSION['error']);
+      }
+      
+      if(isset($_SESSION['success'])) { ?>
+        <div class="alert alert-success">
+            <span style="font-weight:bold"><?= htmlspecialchars($_SESSION['success']); ?></span>
+        </div> <?php
+        unset($_SESSION['success']);
       }
     ?>
     <form action="traitement/connexion_traitement.php" method="post">
@@ -58,6 +44,6 @@
       </div>
     </form>
 
-    <p class="text center"><a href="inscription.php">Inscription</a></p>
+    <p class="text center"><a href="inscription.php">Pas encore de compte ? Créez en un</a></p>
   </div>
 </html>

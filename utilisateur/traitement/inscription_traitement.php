@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 // On inclu la connexion à la bdd
 require_once '../../config.php';
@@ -50,8 +51,23 @@ if(isset($_POST['pseudo']) && isset($_POST['email']) && isset($_POST['password']
         $insert->execute($vars);
         
         // On redirige avec le message de succès
-        header('Location: ../../index.php?reg_err=succes');
-      } else header('Location: ../../index.php?reg_err=password');
-    } else header('Location: ../../index.php?reg_err=email');
-  } else header('Location: ../../index.php?reg_err=already');
+        $_SESSION['success'] = "Inscription réussi";
+        header('Location: ../../index.php');
+      } else { // Ou on reste sur l'inscription avec le message d'erreur
+        $_SESSION['error'] = "Les deux mots de passe ne correspondent pas";
+        header('Location: ../inscription.php');
+      }
+
+    } else {
+      if(strlen($pseudo > 100)) {
+        $_SESSION['error'] = "Pseudo trop long";
+      } else {
+        $_SESSION['error'] = "Mauvais format d'email";
+      }
+        header('Location: ../inscription.php');
+    }
+  } else {
+    $_SESSION['error'] = "Adresse email déjà utilisée";
+    header('Location: ../inscription.php');
+  }
 }

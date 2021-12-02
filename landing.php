@@ -1,10 +1,10 @@
 <?php
+  // Une fois connecté nous trouvons sur cette page
   require_once 'config.php';
   session_start();
   if(!isset($_SESSION['user'])) {
     header('Location: index.php');
   }
- 
 ?>
 <!DOCTYPE html>
 <html lang="en">

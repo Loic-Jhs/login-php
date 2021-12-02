@@ -36,10 +36,19 @@ if(isset($_POST['email']) && isset($_POST['password'])) {
         $_SESSION['user']['email'] = $data->email;
         header('Location: ../../landing.php');
 
-      } else header('Location: ../../index.php?login_err=password');
+      } else {
+        $_SESSION['error'] = "Email ou mot de passe incorrect";
+        header('Location: ../../index.php');
+      }
 
-    } else header('Location: ../../index.php?login_err=email');
+    } else {
+      $_SESSION['error'] = "Format d'email incorrect";
+      header('Location: ../../index.php');
+    }
 
-  } else header('Location: ../../index.php?login_err=already');
+  } else {
+    $_SESSION['error'] = "Email ou mot de passe incorrect";
+    header('Location: ../../index.php');
+  }
  
 } else header('Location: ../../index.php');
